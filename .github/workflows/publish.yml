@@ -77,7 +77,7 @@ jobs:
       - name: Install dependencies
         run: |
           Write-Host "Installing build dependencies..."
-          ./Build/build.ps1 -Bootstrap
+          ./Build/build.ps1 -Bootstrap -BootstrapOnly
 
       - name: Run tests
         run: |
@@ -89,18 +89,31 @@ jobs:
           Write-Host "Building module..."
           ./Build/build.ps1 -Task Build
 
+      - name: Inject prerelease tag into manifest
+        if: steps.version.outputs.prerelease != ''
+        run: |
+          $ModuleName = "${{ steps.module.outputs.name }}"
+          $Prerelease = "${{ steps.version.outputs.prerelease }}"
+          $ManifestPath = "./Output/$ModuleName/$ModuleName.psd1"
+          Write-Host "Injecting Prerelease = '$Prerelease' into $ManifestPath"
+
+          $Content = Get-Content -Path $ManifestPath -Raw
+          # Insert Prerelease key into PSData block
+          $Content = $Content -replace '(PSData\s*=\s*@\{)', "`$1`n            Prerelease = '$Prerelease'"
+          Set-Content -Path $ManifestPath -Value $Content -NoNewline
+          Write-Host "Manifest updated for prerelease"
+
       - name: Publish to PowerShell Gallery
         env:
           PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
         run: |
-          $PublishParams = @{}
-          if ("${{ steps.version.outputs.prerelease }}") {
-            Write-Host "Publishing as prerelease (${{ steps.version.outputs.prerelease }})..."
-            $PublishParams['Prerelease'] = '${{ steps.version.outputs.prerelease }}'
+          $Prerelease = "${{ steps.version.outputs.prerelease }}"
+          if ($Prerelease) {
+            Write-Host "Publishing as prerelease ($Prerelease)..."
           } else {
             Write-Host "Publishing stable release..."
           }
-          ./Build/build.ps1 -Task Publish @PublishParams
+          ./Build/build.ps1 -Task Publish
 
       - name: Extract release notes from CHANGELOG
         id: changelog
