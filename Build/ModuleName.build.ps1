@@ -112,10 +112,16 @@ task Test {
     $PesterConfig.Run.PassThru = $true
     $PesterConfig.Output.Verbosity = 'Detailed'
     $PesterConfig.CodeCoverage.Enabled = $true
-    $PesterConfig.CodeCoverage.Path = @(
-        (Join-Path $SourcePath 'Public' '*.ps1'),
-        (Join-Path $SourcePath 'Private' '*.ps1')
-    )
+    $CoveragePaths = @('Public', 'Private') |
+        ForEach-Object { Join-Path $SourcePath $_ } |
+        Where-Object { Test-Path $_ } |
+        ForEach-Object { Join-Path $_ '*.ps1' }
+    if ($CoveragePaths.Count -eq 0) {
+        $PesterConfig.CodeCoverage.Enabled = $false
+        Write-Build Yellow "No source directories found for code coverage"
+    } else {
+        $PesterConfig.CodeCoverage.Path = $CoveragePaths
+    }
     $PesterConfig.CodeCoverage.OutputFormat = 'JaCoCo'
     $PesterConfig.CodeCoverage.OutputPath = Join-Path $ProjectRoot 'coverage.xml'
     $PesterConfig.TestResult.Enabled = $true
@@ -125,14 +131,23 @@ task Test {
     $TestResults = Invoke-Pester -Configuration $PesterConfig
 
     # Check results
+    if (-not $TestResults -or -not $TestResults.PSObject.Properties['FailedCount']) {
+        throw "Pester did not return valid test results"
+    }
+
     if ($TestResults.FailedCount -gt 0) {
         throw "Pester tests failed: $($TestResults.FailedCount) test(s) failed"
     }
 
     # Check code coverage
     $CoverageThreshold = 70
-    $CoveragePercent = [math]::Round($TestResults.CodeCoverage.CoveragePercent, 2)
-    Write-Build Green "Code Coverage: $CoveragePercent%"
+    if ($TestResults.CodeCoverage -and $TestResults.CodeCoverage.CoveragePercent) {
+        $CoveragePercent = [math]::Round($TestResults.CodeCoverage.CoveragePercent, 2)
+        Write-Build Green "Code Coverage: $CoveragePercent%"
+    } else {
+        $CoveragePercent = 0
+        Write-Build Yellow "Code coverage data not available"
+    }
 
     if ($CoveragePercent -lt $CoverageThreshold) {
         # To enforce coverage, change Write-Build to: throw "Code coverage below threshold"

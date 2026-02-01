@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           Write-Host "Installing build dependencies..."
-          ./Build/build.ps1 -Bootstrap
+          ./Build/build.ps1 -Bootstrap -BootstrapOnly
 
       - name: Run PSScriptAnalyzer
         run: |

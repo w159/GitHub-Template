@@ -40,7 +40,9 @@ param(
     [Parameter(Position = 0)]
     [string[]]$Task = 'Default',
 
-    [switch]$Bootstrap
+    [switch]$Bootstrap,
+
+    [switch]$BootstrapOnly
 )
 
 # Set strict mode
@@ -78,6 +80,8 @@ if ($Bootstrap) {
 
     Write-Host "Bootstrap complete!" -ForegroundColor Green
     Write-Host ""
+
+    if ($BootstrapOnly) { return }
 }
 #endregion Bootstrap Dependencies
 
