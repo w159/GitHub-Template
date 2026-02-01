@@ -112,10 +112,10 @@ task Test {
     $PesterConfig.Run.PassThru = $true
     $PesterConfig.Output.Verbosity = 'Detailed'
     $PesterConfig.CodeCoverage.Enabled = $true
-    $CoveragePaths = @('Public', 'Private') |
+    [string[]]$CoveragePaths = @(@('Public', 'Private') |
         ForEach-Object { Join-Path $SourcePath $_ } |
         Where-Object { Test-Path $_ } |
-        ForEach-Object { Join-Path $_ '*.ps1' }
+        ForEach-Object { Join-Path $_ '*.ps1' })
     if ($CoveragePaths.Count -eq 0) {
         $PesterConfig.CodeCoverage.Enabled = $false
         Write-Build Yellow "No source directories found for code coverage"
