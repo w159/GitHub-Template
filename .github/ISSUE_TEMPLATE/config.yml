@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Community Support
+    url: https://github.com/christaylorcodes/GitHub-Template/discussions
+    about: Ask questions and discuss with the community
+  - name: 📖 Documentation
+    url: https://github.com/christaylorcodes/GitHub-Template/blob/main/README.md
+    about: Check out our documentation
+  - name: 🤝 Contributing Guide
+    url: https://github.com/christaylorcodes/GitHub-Template/blob/main/CONTRIBUTING.md
+    about: Learn how to contribute to this project
+  - name: 🤖 AI Contributor Guide
+    url: https://github.com/christaylorcodes/GitHub-Template/blob/main/AGENTS.md
+    about: Instructions for AI coding agents contributing to this project

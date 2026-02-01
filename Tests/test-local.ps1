@@ -2,8 +2,28 @@
 param(
     [switch]$SkipBuild,
     [switch]$SkipTests,
-    [switch]$SkipAnalyze
+    [switch]$SkipAnalyze,
+
+    [string]$FunctionName,
+
+    [switch]$Quick
 )
+
+# Quick mode: skip build and delegate to Invoke-QuickTest.ps1
+if ($Quick) {
+    $SkipBuild = $true
+
+    if ($FunctionName) {
+        Write-Host "`n[QUICK] Running targeted test for: $FunctionName" -ForegroundColor Yellow
+        & "$PSScriptRoot\Scripts\Invoke-QuickTest.ps1" -FunctionName $FunctionName -IncludeAnalyzer:(-not $SkipAnalyze)
+        exit $LASTEXITCODE
+    }
+
+    # Quick without function name: run all tests directly (no build, no coverage)
+    Write-Host "`n[QUICK] Running all tests (no build, no coverage)..." -ForegroundColor Yellow
+    & "$PSScriptRoot\Scripts\Invoke-QuickTest.ps1" -IncludeAnalyzer:(-not $SkipAnalyze)
+    exit $LASTEXITCODE
+}
 
 Write-Host "`n========================================" -ForegroundColor Cyan
 Write-Host "LOCAL PRE-PUSH VALIDATION" -ForegroundColor Cyan
@@ -11,13 +31,10 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 
 $ErrorActionPreference = 'Stop'
 
-# Add RequiredModules to path
-$env:PSModulePath = (Resolve-Path "output/RequiredModules").Path + [IO.Path]::PathSeparator + $env:PSModulePath
-
 # 1. BUILD
 if (-not $SkipBuild) {
     Write-Host "[1/3] Building module..." -ForegroundColor Yellow
-    & ./build.ps1 -Tasks build
+    & ./Build/build.ps1 -Task Build
     if ($LASTEXITCODE -ne 0) {
         Write-Host "BUILD FAILED" -ForegroundColor Red
         exit 1
@@ -30,7 +47,7 @@ if (-not $SkipAnalyze) {
     Write-Host "[2/3] Running PSScriptAnalyzer..." -ForegroundColor Yellow
     Import-Module PSScriptAnalyzer
 
-    $results = Invoke-ScriptAnalyzer -Path source -Recurse -Settings PSScriptAnalyzerSettings.psd1
+    $results = Invoke-ScriptAnalyzer -Path ./src -Recurse -Settings ./.PSScriptAnalyzerSettings.psd1
 
     if ($results) {
         $results | Format-Table -AutoSize
@@ -52,10 +69,21 @@ if (-not $SkipAnalyze) {
 # 3. TESTS
 if (-not $SkipTests) {
     Write-Host "[3/3] Running Pester tests..." -ForegroundColor Yellow
-    & ./build.ps1 -Tasks test
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "TESTS FAILED" -ForegroundColor Red
-        exit 1
+
+    if ($FunctionName) {
+        Write-Host "Targeted test for: $FunctionName" -ForegroundColor Cyan
+        & "$PSScriptRoot\Scripts\Invoke-QuickTest.ps1" -FunctionName $FunctionName
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "TESTS FAILED" -ForegroundColor Red
+            exit 1
+        }
+    }
+    else {
+        & ./Build/build.ps1 -Task Test
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "TESTS FAILED" -ForegroundColor Red
+            exit 1
+        }
     }
     Write-Host "TESTS PASSED`n" -ForegroundColor Green
 }

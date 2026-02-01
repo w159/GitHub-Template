@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"$GH\" issue create --title \"Commit v1.1 changes, verify CI, tag release\" --body \"$\\(cat <<''EOF''\n## Objective\n\nCommit all v1.1 changes, push to GitHub, verify CI workflows pass, and tag the v1.1 release.\n\n## Requirements\n\n- [ ] Stage and commit all changes\n- [ ] Push and verify CI workflows pass \\(test.yml, analyze.yml\\)\n- [ ] Tag v1.1 release\n\n## Context\n\nv1.1 removed legacy Sampler/ModuleBuilder tooling, consolidated on InvokeBuild, added full module template structure, and cleaned up repo layout. Local validation passes: 18/18 tests, 93.1% coverage, 0 analyzer errors.\n\n## Acceptance Criteria\n\n- All CI checks pass on both Ubuntu and Windows\n- v1.1 tag exists on the commit\nEOF\n\\)\" --milestone \"v1.1 Release\" --label \"ai-task,ai-ready\")"
+    ]
+  }
+}

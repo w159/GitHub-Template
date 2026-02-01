@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src=".\Media\Logo.png" alt="logo" height = 300 ></a>
+  <img src="./docs/media/Logo.png" alt="logo" height = 300 ></a>
   <br>
   GitHub Template
   <br>
@@ -8,58 +8,142 @@
 
 <h4 align="center">
 
-GitHub Template for quick repository creation.
+A production-ready PowerShell module template with built-in CI/CD, testing, and AI-assisted development.
 
 </h4>
 
 <div align="center">
 
-[![Build status](https://ci.appveyor.com/api/projects/status/gkmh0h0234s1x7rt?svg=true)](https://ci.appveyor.com/project/christaylorcodes/connectwisemanageapi)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8aa3633cda3d41d5baa5e9f595b8124f)](https://www.codacy.com/manual/christaylorcodes/ConnectWiseManageAPI?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=christaylorcodes/ConnectWiseManageAPI&amp;utm_campaign=Badge_Grade)
-[![Gallery](https://img.shields.io/powershellgallery/v/ConnectWiseManageAPI?label=PS%20Gallery&logo=powershell&logoColor=white)](https://www.powershellgallery.com/packages/ConnectWiseManageAPI)
-[![Donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat)](https://github.com/christaylorcodes/GitHub-Template/blob/main/DONATE.md)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen?logo=github)](https://github.com/YOUR-USERNAME/YOUR-REPO/actions)
+[![Code Quality](https://img.shields.io/badge/code%20quality-A-brightgreen?logo=codacy)](https://www.codacy.com/YOUR-PROJECT)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue?logo=powershell&logoColor=white)](https://www.powershellgallery.com/packages/YOUR-PACKAGE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Security](https://app.aikido.dev/assets/badges/label-only-dark-theme.svg)](https://app.aikido.dev/audit-report/external/WbAGYSkx7t09VOUAKIlmHeVh/request)
 
 </div>
-<p align="center">
-    <a href="#functions">List of Functions</a> •
-    <a href="#examples">Examples</a> •
-    <a href="#install">Install</a> •
-    <a href="https://github.com/christaylorcodes/GitHub-Template/blob/main/CONTRIBUTING.md">Contribute</a> •
-    <a href="https://github.com/christaylorcodes/GitHub-Template/blob/main/CONTRIBUTING.md#reporting-bugs">Submit a Bug</a> •
-    <a href="https://github.com/christaylorcodes/GitHub-Template/blob/main/CONTRIBUTING.md#suggesting-enhancements">Request a Feature</a>
-</p>
-
-<!-- Summary -->
-
-This is a template to help with the creation of new repositories. This should help standardize projects, give them a consistent look and reduce the time to publish. Can be used with build process to automate initial creation of repository.
-
-<!-- Summary -->
 
 <p align="center">
-  <img src=".\Media\Demo.gif" alt="Demo" width = 70% ></a>
+    <a href="#whats-included">What's Included</a> •
+    <a href="#getting-started">Getting Started</a> •
+    <a href="#documentation">Documentation</a> •
+    <a href="#ai-agents">AI Agents</a> •
+    <a href="#project-structure">Project Structure</a> •
+    <a href="#contributing">Contributing</a>
 </p>
 
-## Install
+---
 
-This section shows how to install/setup the code.
+This template gives you everything needed to publish a professional PowerShell module — build pipeline, Pester tests, PSScriptAnalyzer, GitHub Actions CI/CD, and PowerShell Gallery publishing — all wired together and ready to go. It's the standard base for all [Chris Taylor Codes](https://github.com/christaylorcodes) projects, and other repos reference back here for shared conventions and tooling.
+
+<p align="center">
+  <img src="./docs/media/Demo.gif" alt="Demo" width = 70% ></a>
+</p>
+
+## What's Included
+
+| Category | What You Get | Details |
+| -------- | ------------ | ------- |
+| **Build System** | InvokeBuild pipeline with Clean, Analyze, Test, Build, and Publish tasks | [AGENTS.md — Build System](AGENTS.md#build-system) |
+| **Testing** | Pester 5.6+ with code coverage (JaCoCo) and NUnit results | [AGENTS.md — Test Framework](AGENTS.md#test-framework) |
+| **Code Quality** | PSScriptAnalyzer with tuned rule set and editor integration | [.PSScriptAnalyzerSettings.psd1](.PSScriptAnalyzerSettings.psd1) |
+| **CI/CD Workflows** | GitHub Actions for testing, analysis, and PSGallery publishing | [AGENTS.md — CI/CD](AGENTS.md#cicd) |
+| **Module Structure** | Auto-discovering `src/` layout with Classes, Private, and Public folders | [AGENTS.md — Architecture](AGENTS.md#architecture) |
+| **Documentation** | Comment-based help, platyPS markdown docs, usage guides | [docs/](docs/) |
+| **Templates** | Boilerplate for new functions, classes, and Pester tests | [Templates/](Templates/) |
+| **Automation Scripts** | Repository initialization, validation, badge generation, label setup | [Scripts/](Scripts/) |
+| **Community Files** | Contributing guide, code of conduct, security policy, issue/PR templates | [CONTRIBUTING.md](.github/CONTRIBUTING.md) |
+| **AI Agent Support** | AGENTS.md, CLAUDE.md, AI issue labels, structured task templates | [AI Agents](#ai-agents) |
+
+## Getting Started
+
+### 1. Create your repo from the template
+
+Click **"Use this template"** at the top of this repository, name your new repo, and clone it locally.
+
+### 2. Let the agent set it up
+
+Open the project in your AI coding tool (Claude Code, GitHub Copilot, Cursor, etc.) and tell it:
+
+> Help me initialize this as a new PowerShell module. Read AGENTS.md for project context.
+
+The agent will walk you through naming your module, running the initialization script, updating placeholders, and validating the result — no checklist required.
+
+### 3. Or run the script directly
 
 ```powershell
-Install-Module CodeExample
+.\Scripts\Initialize-Repository.ps1 -Name "MyModule" `
+                                     -Description "What it does" `
+                                     -Author "Your Name" `
+                                     -GitHubUsername "your-username" `
+                                     -InitializeGit
 ```
 
->If you are having issues accessing the PowerShell Gallery check out my [repair script](https://github.com/christaylorcodes/Initialize-PSGallery)
+This renames module files, populates the manifest, replaces all placeholders, and initializes git.
 
+> For manual step-by-step setup, badge generation, validation, and troubleshooting, see the [Template Usage Guide](docs/TEMPLATE_USAGE.md).
 
-## [Contributing](https://github.com/christaylorcodes/GitHub-Template/blob/main/CONTRIBUTING.md)
+## Documentation
 
-If you use this project please give it a star and follow so you can get updated when new features are released. This also lets me know what projects are getting used and what ones I should dedicate more time to. If you want to get more involved please see the [contributing page](https://github.com/christaylorcodes/GitHub-Template/blob/main/CONTRIBUTING.md). Projects need all kinds of help even if you don't know how to code.
+| Document | Audience | Description |
+| -------- | -------- | ----------- |
+| [AGENTS.md](AGENTS.md) | AI agents and developers | Architecture, build commands, code conventions, and contribution workflow |
+| [Template Usage Guide](docs/TEMPLATE_USAGE.md) | Template users | Detailed setup walkthrough, customization checklist, and common issues |
+| [Module Usage](docs/USAGE.md) | Module consumers | Installation, quick start, and function reference |
+| [Publishing Guide](docs/PUBLISHING.md) | Maintainers | Publishing to PowerShell Gallery with CI/CD |
+| [Contributing](.github/CONTRIBUTING.md) | Contributors | How to report bugs, request features, and submit PRs |
+| [Changelog](CHANGELOG.md) | Everyone | Version history and release notes |
+| [Security Policy](.github/SECURITY.md) | Security researchers | Supported versions, reporting vulnerabilities, response timelines |
+| [Code of Conduct](.github/CODE_OF_CONDUCT.md) | Community | Behavioral expectations and enforcement |
 
-Want to share something you created using the module? Submit it to be featured as a Community Package.
+## AI Agents
 
-## [Donating](https://github.com/christaylorcodes/GitHub-Template/blob/main/DONATE.md)
+This repository is designed for AI-assisted development from the ground up. Whether you're using Claude Code, GitHub Copilot, Cursor, Windsurf, or another AI coding tool, the agents have everything they need to contribute effectively.
 
-If you cant take time to contribute maybe you would like to help another way.
+**For agents working in this repo:**
 
-It takes time to maintain this project. Does the time spent on this module help you do cool things? Is that time worth a beer or two?
+- [AGENTS.md](AGENTS.md) — Full project context: architecture, build commands, conventions, and workflow
+- [CLAUDE.md](CLAUDE.md) — Claude Code session workflow and planning system
 
-Donations allow me to spend more time on this project and implement your feature requests.
+**For agents working in other repos that use this template:**
+
+- Link back to this repo's [AGENTS.md](AGENTS.md) for shared conventions
+- The same build system, test framework, and code style apply across all projects
+
+**AI workflow features:**
+
+- Issue templates structured for AI consumption (`ai-task`, `ai-ready` labels)
+- PR template with AI contribution checkbox
+- [Initialize-Labels.ps1](Scripts/Initialize-Labels.ps1) sets up AI workflow labels on your repo
+
+## Project Structure
+
+```text
+your-module/
+  src/
+    ModuleName.psd1              # Module manifest
+    ModuleName.psm1              # Root module (auto-loads subdirectories)
+    Classes/                     # PowerShell class definitions
+    Private/                     # Internal helper functions
+    Public/                      # Exported functions (one per file)
+  Build/
+    build.ps1                    # Entry point (bootstraps dependencies)
+    ModuleName.build.ps1         # InvokeBuild task definitions
+  Tests/
+    Unit/Public/                 # Tests for exported functions
+    Unit/Private/                # Tests for internal functions
+    Integration/                 # Integration tests
+  Templates/                     # Boilerplate for new functions and tests
+  Scripts/                       # Automation (init, validate, badges, labels)
+  docs/                          # Guides, help files, examples
+    media/                       # Logo, demo GIF, media assets
+```
+
+See [AGENTS.md — Architecture](AGENTS.md#architecture) for the full layout, module loading order, and build system details.
+
+## Contributing
+
+If you find this template useful, give it a star so others can find it too. For bugs, features, and PRs, see the [contributing guide](.github/CONTRIBUTING.md). Contributions of all kinds are welcome — you don't need to write code to help.
+
+## [Support](docs/DONATE.md)
+
+If this template saves you time, consider [buying me a beer](docs/DONATE.md).

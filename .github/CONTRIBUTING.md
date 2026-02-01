@@ -14,6 +14,8 @@ The following is a set of guidelines for contributing. These are mostly guidelin
 -   [Your First Code Contribution](#your-first-code-contribution)
 -   [Pull Requests](#pull-requests)
 
+[AI Contributors](#ai-contributors)
+
 [Styleguides](#styleguides)
 
 -   [Git Commit Messages](#git-commit-messages)
@@ -28,7 +30,6 @@ Join a community Slack team:
 
 -   [Join the MSPGeek Slack Team](https://join.mspgeek.com/)
 -   [Join the PowerShell Slack Team](https://powershell.slack.com/join/shared_invite/zt-eodd93as-RHYl6s~9XH8FNyE09M7zmA#/)
--   [Join the Screeps Slack Team](https://chat.screeps.com/)
 
     -   Even though Slack is a chat service, sometimes it takes several hours for community members to respond — please be patient!
     -   Use a channel that looks appropriate for general questions or discussion
@@ -64,7 +65,7 @@ Explain the problem and include additional details to help maintainers reproduce
 
 Provide more context by answering these questions:
 
--   **Did the problem start happening recently** (e.g. after updating to a new version of Manage) or was this always a problem?
+-   **Did the problem start happening recently** (e.g. after updating to a new version) or was this always a problem?
 -   **Can you reliably reproduce the issue?** If not, provide details about how often the problem happens and under which conditions it normally happens.
 
 ### Suggesting Enhancements
@@ -83,8 +84,12 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 -   **Describe the current behavior** and **explain which behavior you expected to see instead** and why.
 -   **Explain why this enhancement would be useful** to most users and isn't something that can or should be implemented as a [community package](<>).
 -   **List some other text examples where this enhancement exists.**
--   **Specify which version of manage you're using.**
+-   **Specify which version of the module you're using.**
 -   **Specify the name and version of the OS you're using.**
+
+## AI Contributors
+
+This project welcomes contributions from AI coding agents. AI agents follow the same quality standards as human contributors. See [AGENTS.md](AGENTS.md) for complete instructions, conventions, and the issue-driven workflow.
 
 ## Styleguides
 
@@ -105,8 +110,6 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
     -   :racehorse: `:racehorse:` when improving performance
     -   :non-potable_water: `:non-potable_water:` when plugging memory leaks
     -   :memo: `:memo:` when writing docs
-    -   :penguin: `:penguin:` when fixing something on Linux
-    -   :apple: `:apple:` when fixing something on macOS
     -   :checkered_flag: `:checkered_flag:` when fixing something on Windows
     -   :bug: `:bug:` when fixing a bug
     -   :fire: `:fire:` when removing code or files

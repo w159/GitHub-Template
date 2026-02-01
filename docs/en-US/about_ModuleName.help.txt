@@ -1,0 +1,39 @@
+TOPIC
+    about_ModuleName
+
+SHORT DESCRIPTION
+    Brief description of the ModuleName module and its purpose
+
+LONG DESCRIPTION
+    Detailed description of what the ModuleName module does.
+
+    This module provides functionality for managing and automating common tasks.
+
+    Key features include:
+    - Core module functionality
+    - Pipeline-compatible cmdlets
+    - Comprehensive error handling
+
+EXAMPLES
+    Example 1: Basic usage
+    ------------------------
+    PS> Import-Module ModuleName
+    PS> Get-Something -Name "Example"
+
+    This example shows how to import the module and use a basic function.
+
+    Example 2: Pipeline usage
+    ------------------------
+    PS> 'Item1', 'Item2' | Get-Something
+
+    This example demonstrates pipeline input.
+
+KEYWORDS
+    PowerShell
+    Automation
+    Module
+
+SEE ALSO
+    Get-Something
+    Set-Something
+    https://github.com/YOUR-USERNAME/ModuleName
